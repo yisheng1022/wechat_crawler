@@ -92,10 +92,12 @@ def wechat_catch(filename,Date = '0818'):
 			art_info.to_csv('wechat_crawl' + Date + '.csv',mode = 'a+',header = True, index = False,encoding = 'utf-8')
 			del media_l,content_l,media_count_l
 			gc.collect()
+
+####################################################################################			
 # to_html()
 # wechat_catch('0809')
 
-for file_count in range(1,53):
-	Date = '0813'
-	file_name = str(file_count) + '_' + Date + '.txt'
-	wechat_catch('C:\\Users\\ianle\\Desktop\\virtualpy\\test\\0813\\'+file_name,Date)
+# for file_count in range(1,53):
+# 	Date = '0813'
+# 	file_name = str(file_count) + '_' + Date + '.txt'
+# 	wechat_catch('C:\\Users\\ianle\\Desktop\\virtualpy\\test\\0813\\'+file_name,Date)
