@@ -1,4 +1,5 @@
 # wechat_crawler
+這是一個能夠抓取wechat文章的小程式，目前使用的是半自動的方式；需要人工獲取文章頁面的原始碼，才能解析相關內容。
 ## wechat_func.py
 1. to_html()可將txt檔轉成html檔，方便後續解析
 2. wechat_catch()可將上述得到的html檔解析成以下資料
