@@ -100,4 +100,4 @@ def wechat_catch(filename,Date = '0818'):
 # for file_count in range(1,53):
 # 	Date = '0813'
 # 	file_name = str(file_count) + '_' + Date + '.txt'
-# 	wechat_catch('C:\\Users\\ianle\\Desktop\\virtualpy\\test\\0813\\'+file_name,Date)
+# 	wechat_catch(file_name)
