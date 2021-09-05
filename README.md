@@ -6,7 +6,7 @@
     </br>◆ 文章網址(url)
     </br>◆ 文章標題(title)
     </br>◆ 文章發布日期(date)
-    </br>◆ 文章作者(author) ※目前僅顯示原創文章
+    </br>◆ 文章作者(author) ※2021.09.06更新，可以抓到作者了
     </br>◆ 文章全文(content)
     </br>◆ 文章多媒體數量(media)
     </br>◆ 文章發布帳號(account)
