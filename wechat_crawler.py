@@ -103,12 +103,14 @@ def wechat_catch(filename,Date = '0818'):
 			art_info.to_csv('wechat_crawl26' + Date + '.csv',mode = 'a+',header = True, index = False,encoding = 'utf-8')
 			del media_l,content_l,media_count_l
 			gc.collect()
+
+############################################################################################			
 # to_html()
 # wechat_catch('26_0904.html','0904')
 
-for file_count in range(33,56):
-	print("Now at:",file_count)
-	if os.path.isfile(str(file_count) + '_0904.html'):
-		wechat_catch(str(file_count) + '_0904.html','0904')
-	else:
-		print("No such file")
+# for file_count in range(33,56):
+# 	print("Now at:",file_count)
+# 	if os.path.isfile(str(file_count) + '_0904.html'):
+# 		wechat_catch(str(file_count) + '_0904.html','0904')
+# 	else:
+# 		print("No such file")
