@@ -1,6 +1,7 @@
 # from selenium import webdriver
 import requests
 from bs4 import BeautifulSoup as BS
+from tqdm import tqdm, trange
 import csv,os
 import time
 import random
@@ -45,7 +46,7 @@ def wechat_catch(filename,Date = '0818'):
 				arturl_l.append(url['hrefs'])
 			except:
 				arturl_l.append('No url')
-		print(len(arturl_l))
+		progress = tqdm(total = len(arturl_l))
 		art_info["url"] = arturl_l
 		art_info["title"] = title_l
 		art_info["date"] = date_l
@@ -54,7 +55,7 @@ def wechat_catch(filename,Date = '0818'):
 		media_l = []
 		author_l = []
 		for link in arturl_l:
-			print("Now at: ",link)
+			progress.update(1)
 			media_l.append(media[0].text)
 			if link != 'No url':
 				page_content = requests.get(link)
