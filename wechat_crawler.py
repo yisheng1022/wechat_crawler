@@ -5,7 +5,7 @@ from tqdm import tqdm, trange
 import csv,os
 import time
 import random
-import datetime,gc,builtins
+import datetime,gc,builtins,threading
 import pandas as pd
 # import uuid
 
@@ -14,12 +14,14 @@ def to_html(filename):
 	f = open(file_name,'r',encoding = 'utf-8')
 	cont = f.read()
 	htf_name = filename.replace('.txt','.html')
-	htf = open(htf_name,'a+',encoding = 'utf-8')
+	htf = open(htf_name,'w',encoding = 'utf-8')
 	htf.write(cont)
 	f.close()
 	htf.close()
 
-def wechat_catch(filename,Date = '0818'):	
+def wechat_catch(filename,Date = '0818'):
+	lock = threading.Lock()
+	lock.acquire()	
 	# for file_count in range(1,55):
 	# 	file_name = str(file_count) + '_' + Date + '.html'
 	file_name = filename
@@ -61,7 +63,7 @@ def wechat_catch(filename,Date = '0818'):
 				page_content = requests.get(link)
 				page_content.encoding = 'utf-8'
 				page_source = BS(page_content.text,'html.parser')
-				tmp_content = page_source.select('#js_content')
+				tmp_content = page_source.select('div#js_content section span')
 				autt = page_source.select('head meta')
 				if len(autt) >= 22:
 					for ggg in autt:
@@ -78,40 +80,37 @@ def wechat_catch(filename,Date = '0818'):
 				# print(author_l)
 				if len(tmp_content) == 0:
 					content_l.append(" ")
-				for content in tmp_content:
-					if content.text == "":
-						content_l.append(" ")
-					else:
-						content_l.append(content.text.replace('\n',''))
+				else:
+					cont_words = ""
+					for content in tmp_content:
+						cont_words = cont_words + content.text + "\n"
+					content_l.append(cont_words)
 				news_pic = page_source.select('div.rich_media_wrp img')
 				news_video = page_source.select('txpdiv.txp_poster')
 				news_sound = page_source.select('mpvoice')
 				media_count_l.append(len(news_pic) + len(news_sound) + len(news_video))
-				time.sleep(random.randint(5,7))
+				time.sleep(random.randint(3,7))
 			else:
 				content_l.append(" ")
 				media_count_l.append(" ")
 				author_l.append(" ")
+			page_content.close()
+			
 		art_info["author"] = author_l
 		art_info["content"] = content_l
 		art_info["media"] = media_count_l
 		art_info["account"] = media_l
-		if os.path.isfile('wechat_crawl26' + Date + '.csv'):
-			art_info.to_csv('wechat_crawl26' + Date + '.csv',mode = 'a+',header = False, index = False,encoding = 'utf-8')
+		if os.path.isfile('wechat_crawlaa' + Date + '.csv'):
+			art_info.to_csv('wechat_crawl' + Date + '.csv',mode = 'a+',header = False, index = False,encoding = 'utf-8')
 			del media_l,content_l,media_count_l
 			gc.collect()
 		else:
-			art_info.to_csv('wechat_crawl26' + Date + '.csv',mode = 'a+',header = True, index = False,encoding = 'utf-8')
+			art_info.to_csv('wechat_crawl' + Date + '.csv',mode = 'a+',header = True, index = False,encoding = 'utf-8')
 			del media_l,content_l,media_count_l
 			gc.collect()
 
-############################################################################################			
-# to_html()
+
+
 # wechat_catch('26_0904.html','0904')
 
-# for file_count in range(33,56):
-# 	print("Now at:",file_count)
-# 	if os.path.isfile(str(file_count) + '_0904.html'):
-# 		wechat_catch(str(file_count) + '_0904.html','0904')
-# 	else:
-# 		print("No such file")
+
